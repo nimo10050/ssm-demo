@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nimo.dao.StudentMapper">
+    
+    <resultMap id="studentMap" type="com.nimo.entity.Student">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <collection property="courseList" ofType="com.nimo.entity.Course">
+            <id column="course_id" jdbcType="INTEGER" property="courseId"/>
+            <result column="name" jdbcType="VARCHAR" property="name"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="queryStudent" resultMap="studentMap">
+      select s.id as id,s.username as username,c.name as name,c.id as course_id from student s left join course c on s.id=c.student_id
+      where s.id=1
+    </select>
+
+    <select id="queryCourse" resultType="com.nimo.entity.Course">
+      select * from course
+      where student_id=1
+    </select>
+
+
+</mapper>
